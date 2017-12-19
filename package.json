@@ -1,0 +1,17 @@
+{
+  "name": "vandra-8bit",
+  "version": "1.0.0",
+  "description": "LoFi stuff",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Carlsson",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
