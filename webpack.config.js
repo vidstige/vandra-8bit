@@ -4,4 +4,9 @@ module.exports = {
         path: __dirname + "/build",
         filename: "bundle.js"
     },
+    module: {
+        loaders: [
+            { test: /\.css$/, loader: "style-loader!css-loader" },
+        ]
+    },
 };
