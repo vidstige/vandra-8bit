@@ -1,5 +1,17 @@
 require("./style.css");
 
+// mini 3D rendering library
+function Mesh(vertices, faces) {
+    this.vertices = vertices;
+    this.faces = faces;
+}
+
+function Renderer() {
+    this.render = function() {
+        
+    }
+}
+
 function onload() {
     console.log("onload");
     var element = document.getElementById('canvas');
