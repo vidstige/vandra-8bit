@@ -51,23 +51,35 @@ function mul(m, v) {
 }
 
 // mini 3D rendering library
+function Camera() {
+    var that = this;
+
+    this.matrix = function() {
+        return lookat(that.eye, that.at, that.up);
+    };
+}
 
 function Wireframe(vertices, lines) {
     this.vertices = vertices;
     this.lines = lines;
 }
 
-function Renderer(el) {
-    var ctx = el.getContext('2d');
+function Renderer(el, rx, ry) {
+    var front = el.getContext('2d');
+
+    var backbuffer = document.createElement('canvas');
+    backbuffer.setAttribute('width', rx);
+    backbuffer.setAttribute('height', ry);
+    var ctx = backbuffer.getContext('2d');
+
     //var img = ctx.createImageData(320, 200);
     this.render = function(wireframe, camera) {
-        var eye = [0.0, 0.0, -2];
-        var at = [0, 0, 0];
-        var up = [0, 1, 0];
-        var camera = lookat(eye, at, up);
-        var vertices = mul(camera, wireframe.vertices);
+        var vertices = mul(camera.matrix(), wireframe.vertices);
 
-        ctx.strokeStyle = "green";
+        ctx.clearRect(0, 0, rx, ry);
+
+        ctx.strokeStyle = "lightgreen";
+        ctx.lineWidth = 2;
         ctx.beginPath();
         for (var i = 0; i < wireframe.lines.length; i += 2) {
             var i0 = wireframe.lines[i + 0]*3;
@@ -80,10 +92,20 @@ function Renderer(el) {
             var y1 = vertices[i1 + 1];
             var z1 = vertices[i1 + 2];
 
-            ctx.moveTo(160+x0*64, 100+y0*64);
-            ctx.lineTo(160+x1*64, 100+y1*64);
+            const s = 64;
+            ctx.moveTo(rx/2 + x0*s/(z0+5), ry/2 + y0*s/(z0+5));
+            ctx.lineTo(rx/2 + x1*s/(z1+5), ry/2 + y1*s/(z1+5));
+            
         }
         ctx.stroke();
+
+        const tmp = ctx.getImageData(0, 0, rx, ry);
+        
+        front.clearRect(0, 0, el.width, el.height);
+        const ratio = 8; // el.width/rx;
+        front.setTransform(ratio, 0, 0, ratio, 0, 0);
+        front.imageSmoothingEnabled = false;
+        front.drawImage(backbuffer, 0, 0);
         
         /*for (var i = 0; i < img.width * img.height * 4; i += 4) {
             img.data[i + 0] = 0;
@@ -95,4 +117,4 @@ function Renderer(el) {
     }
 }
 
-module.exports = { Wireframe, Renderer };
+module.exports = { Wireframe, Renderer, Camera };
