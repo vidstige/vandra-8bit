@@ -106,14 +106,6 @@ function Renderer(el, rx, ry) {
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(backbuffer, 0, 0);
-        
-        /*for (var i = 0; i < img.width * img.height * 4; i += 4) {
-            img.data[i + 0] = 0;
-            img.data[i + 1] = 0;
-            img.data[i + 2] = 0;
-            img.data[i + 3] = 0xff;
-        }
-        ctx.putImageData(img, 0, 0);*/
     }
 }
 
