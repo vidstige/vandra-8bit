@@ -3,11 +3,14 @@ module.exports = {
     output: {
         path: __dirname + "/build",
         publicPath: 'build/',
-        filename: "bundle.js"
+        filename: "bundle.js",
     },
     module: {
         loaders: [
             { test: /\.css$/, loader: "style-loader!css-loader" },
         ]
     },
+    devServer: {
+        contentBase: "static/",
+    }
 };
