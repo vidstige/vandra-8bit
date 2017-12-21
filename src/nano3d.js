@@ -109,4 +109,10 @@ function Renderer(el, rx, ry) {
     }
 }
 
-module.exports = { Wireframe, Renderer, Camera };
+const load = {
+    obj: function(text) {
+        return text;
+    }
+};
+
+module.exports = { Wireframe, Renderer, Camera, load };

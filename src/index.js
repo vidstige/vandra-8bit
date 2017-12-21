@@ -6,6 +6,10 @@ const cube = require('./cube');
 
 
 function onload() {
+    fetch('vandra.obj').then(function (r) {
+        return r.text()
+    }).then(nano3d.load.obj).then(console.log).catch(console.error);
+
     var element = document.getElementById('canvas');
     const renderer = new nano3d.Renderer(element, 80, 50);
     var camera = new nano3d.Camera();
