@@ -64,6 +64,13 @@ function Wireframe(vertices, lines) {
     this.lines = lines;
 }
 
+function project(v, idx, screen, rx, ry) {
+    const s = 256;
+    const i = idx * 3;
+    screen[0] = rx / 2 + v[i+0] * s / (v[i+2] + 5);
+    screen[1] = ry / 2 + v[i+1] * s / (v[i+2] + 5);
+}
+
 function Renderer(el, rx, ry) {
     var front = el.getContext('2d');
 
@@ -81,8 +88,15 @@ function Renderer(el, rx, ry) {
         ctx.strokeStyle = "lightgreen";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        for (var i = 0; i < wireframe.lines.length; i += 2) {
-            var i0 = wireframe.lines[i + 0]*3;
+        var screen = [null, null];
+        for (var i = 0; i < wireframe.lines.length; i++) {
+            project(vertices,wireframe.lines[i][0], screen, rx, ry);
+            ctx.moveTo(screen[0], screen[1]);
+            for (var j = 1; j < wireframe.lines[i].length; j++) {
+                project(vertices, wireframe.lines[i][j], screen, rx, ry);
+                ctx.lineTo(screen[0], screen[1]);
+            }
+            /*var i0 = wireframe.lines[i + 0]*3;
             var i1 = wireframe.lines[i + 1]*3;
 
             var x0 = vertices[i0 + 0];
@@ -94,7 +108,7 @@ function Renderer(el, rx, ry) {
 
             const s = 64;
             ctx.moveTo(rx/2 + x0*s/(z0+5), ry/2 + y0*s/(z0+5));
-            ctx.lineTo(rx/2 + x1*s/(z1+5), ry/2 + y1*s/(z1+5));
+            ctx.lineTo(rx/2 + x1*s/(z1+5), ry/2 + y1*s/(z1+5));*/
             
         }
         ctx.stroke();
@@ -102,16 +116,41 @@ function Renderer(el, rx, ry) {
         const tmp = ctx.getImageData(0, 0, rx, ry);
         
         front.clearRect(0, 0, el.width, el.height);
-        const ratio = 8; // el.width/rx;
+        const ratio = 2; // el.width/rx;
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(backbuffer, 0, 0);
     }
 }
 
+function parseDecimalInt(s) {
+    return parseInt(s, 10);
+}
+
 const load = {
     obj: function(text) {
-        return text;
+        var positions = [];
+        var ls = [];
+
+        const lines = text.split(/\r?\n/);
+        for (var i = 0; i < lines.length; i++) {
+            if (lines[i].startsWith('#')) {
+                continue;
+            }
+            const parts = lines[i].split(/\s+/);
+            const op = parts.shift();
+            if (op == 'v') {
+                positions.push(
+                    parseFloat(parts[0]),
+                    parseFloat(parts[1]),
+                    parseFloat(parts[2]),
+                );
+            }
+            if (op == 'l') {
+                ls.push(parts.map(parseDecimalInt));
+            }
+        }
+        return new Wireframe(positions, ls);
     }
 };
 
