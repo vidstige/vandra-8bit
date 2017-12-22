@@ -12,8 +12,10 @@ function spinWireframe(w) {
     camera.up = [0, 1, 0];
 
     function spin(timestamp) {
-        const t = timestamp / 2000.0
-        camera.eye = [Math.sin(t), Math.sin(t/2)/10, Math.cos(t)];
+        const t = timestamp / 2000.0;
+        const r = 150;
+
+        camera.eye = [r*Math.sin(t), r*Math.sin(t/2)/10, r*Math.cos(t)];
         renderer.render(w, camera);
         requestAnimationFrame(spin);
     }
@@ -21,12 +23,12 @@ function spinWireframe(w) {
 }
 
 function onload() {
-/*
+
     fetch('vandra.obj').then(function (r) {
         return r.text()
     }).then(nano3d.load.obj).then(spinWireframe).catch(console.error);
-*/
-    spinWireframe(cube);
+
+    //spinWireframe(cube);
 }
 
 window.onload = onload;

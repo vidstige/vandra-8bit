@@ -67,8 +67,8 @@ function Wireframe(vertices, lines) {
 function project(v, idx, screen, rx, ry) {
     const s = 64;
     const i = idx * 3;
-    screen[0] = rx / 2 + v[i+0] * s / (v[i+2] + 5);
-    screen[1] = ry / 2 + v[i+1] * s / (v[i+2] + 5);
+    screen[0] = rx / 2 + v[i+0] * s / (v[i+2] + 150);
+    screen[1] = ry / 2 + v[i+1] * s / (v[i+2] + 150);
 }
 
 function Renderer(el, rx, ry) {
