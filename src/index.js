@@ -6,7 +6,7 @@ const cube = require('./cube');
 
 function spinWireframe(w) {
     var element = document.getElementById('canvas');
-    const renderer = new nano3d.Renderer(element, 80, 50);
+    const renderer = new nano3d.Renderer(element, 160, 100);
     var camera = new nano3d.Camera();
     camera.at = [0, 0, 0];
     camera.up = [0, 1, 0];
@@ -15,7 +15,7 @@ function spinWireframe(w) {
         const t = timestamp / 2000.0;
         const r = 150;
 
-        camera.eye = [r*Math.sin(t), r*Math.sin(t/2)/10, r*Math.cos(t)];
+        camera.eye = [r*Math.sin(t), r*Math.sin(t/2)/2, r*Math.cos(t)];
         renderer.render(w, camera);
         requestAnimationFrame(spin);
     }

@@ -65,7 +65,7 @@ function Wireframe(vertices, lines) {
 }
 
 function project(v, idx, screen, rx, ry) {
-    const s = 64;
+    const s = 128;
     const i = idx * 3;
     screen[0] = rx / 2 + v[i+0] * s / (v[i+2] + 150);
     screen[1] = ry / 2 + v[i+1] * s / (v[i+2] + 150);
@@ -79,7 +79,6 @@ function Renderer(el, rx, ry) {
     backbuffer.setAttribute('height', ry);
     var ctx = backbuffer.getContext('2d');
 
-    //var img = ctx.createImageData(320, 200);
     this.render = function(wireframe, camera) {
         var vertices = mul(camera.matrix(), wireframe.vertices);
 
@@ -102,7 +101,7 @@ function Renderer(el, rx, ry) {
         const tmp = ctx.getImageData(0, 0, rx, ry);
         
         front.clearRect(0, 0, el.width, el.height);
-        const ratio = 8; // el.width/rx;
+        const ratio = 4; // el.width/rx;
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(backbuffer, 0, 0);
