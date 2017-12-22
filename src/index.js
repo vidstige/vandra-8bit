@@ -15,7 +15,7 @@ function spinWireframe(w) {
         const t = timestamp / 2000.0;
         const r = 150;
 
-        camera.eye = [r*Math.sin(t), r*Math.sin(t/2)/2, r*Math.cos(t)];
+        camera.eye = [r*Math.sin(t), -40, r*Math.cos(t)];
         renderer.render(w, camera);
         requestAnimationFrame(spin);
     }

@@ -30,10 +30,10 @@ function lookat(eye, at, up) {
     const yaxis = cross(zaxis, xaxis)
     
     return [
-        xaxis[0],         yaxis[0],         zaxis[0],         0,
-        xaxis[1],         yaxis[1],         zaxis[1],         0,
-        xaxis[2],         yaxis[2],         zaxis[2],         0,
-        -dot(xaxis, eye), -dot(yaxis, eye), -dot(zaxis, eye), 1,
+        xaxis[0], xaxis[1], xaxis[2], -dot(xaxis, eye),
+        yaxis[0], yaxis[1], yaxis[2], -dot(yaxis, eye),
+        zaxis[0], zaxis[1], zaxis[2], -dot(zaxis, eye),
+               0,        0,        0,                1,
     ];
 }
 
@@ -65,10 +65,10 @@ function Wireframe(vertices, lines) {
 }
 
 function project(v, idx, screen, rx, ry) {
-    const s = 128;
+    const s = 196;
     const i = idx * 3;
-    screen[0] = rx / 2 + v[i+0] * s / (v[i+2] + 150);
-    screen[1] = ry / 2 + v[i+1] * s / (v[i+2] + 150);
+    screen[0] = rx / 2 + v[i+0] * s / v[i+2];
+    screen[1] = 2*ry/3 + v[i+1] * s / v[i+2];
 }
 
 function Renderer(el, rx, ry) {
