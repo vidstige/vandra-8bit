@@ -6,7 +6,7 @@ const cube = require('./cube');
 
 function spinWireframe(w) {
     var element = document.getElementById('canvas');
-    const renderer = new nano3d.Renderer(element, 320, 200);
+    const renderer = new nano3d.Renderer(element, 80, 50);
     var camera = new nano3d.Camera();
     camera.at = [0, 0, 0];
     camera.up = [0, 1, 0];

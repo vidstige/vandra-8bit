@@ -65,7 +65,7 @@ function Wireframe(vertices, lines) {
 }
 
 function project(v, idx, screen, rx, ry) {
-    const s = 256;
+    const s = 64;
     const i = idx * 3;
     screen[0] = rx / 2 + v[i+0] * s / (v[i+2] + 5);
     screen[1] = ry / 2 + v[i+1] * s / (v[i+2] + 5);
@@ -96,27 +96,13 @@ function Renderer(el, rx, ry) {
                 project(vertices, wireframe.lines[i][j], screen, rx, ry);
                 ctx.lineTo(screen[0], screen[1]);
             }
-            /*var i0 = wireframe.lines[i + 0]*3;
-            var i1 = wireframe.lines[i + 1]*3;
-
-            var x0 = vertices[i0 + 0];
-            var y0 = vertices[i0 + 1];
-            var z0 = vertices[i0 + 2];
-            var x1 = vertices[i1 + 0];
-            var y1 = vertices[i1 + 1];
-            var z1 = vertices[i1 + 2];
-
-            const s = 64;
-            ctx.moveTo(rx/2 + x0*s/(z0+5), ry/2 + y0*s/(z0+5));
-            ctx.lineTo(rx/2 + x1*s/(z1+5), ry/2 + y1*s/(z1+5));*/
-            
         }
         ctx.stroke();
 
         const tmp = ctx.getImageData(0, 0, rx, ry);
         
         front.clearRect(0, 0, el.width, el.height);
-        const ratio = 2; // el.width/rx;
+        const ratio = 8; // el.width/rx;
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(backbuffer, 0, 0);
