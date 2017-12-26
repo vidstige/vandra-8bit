@@ -19,6 +19,14 @@ function spinWireframe(w) {
 
         camera.eye = [r*Math.sin(t), -80, r*Math.cos(t)];
         renderer.render(w, camera);
+
+        // Draw HUDs
+        var ctx = pixels.backbuffer.getContext('2d');
+        ctx.fillStyle = "lightgreen";
+        ctx.font = '8px x04b03';
+        ctx.fillText('04b03', 1, 12);
+        
+        
         pixels.update(element);
         requestAnimationFrame(spin);
     }

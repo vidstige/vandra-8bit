@@ -92,11 +92,6 @@ function Renderer(el) {
             }
         }
         ctx.stroke();
-
-        // Draw HUDs
-        ctx.fillStyle = "lightgreen";
-        ctx.font = '8px x04b03';
-        ctx.fillText('04b03', 1, 12);
     }
 }
 
