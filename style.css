@@ -1,2 +1,6 @@
+@font-face {
+    font-family: 'x04b03';
+    src: url('static/fonts/04b03.ttf');
+}
 body { background: black; }
 #canvas { background: #121; image-rendering: pixelated; }

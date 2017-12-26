@@ -98,6 +98,9 @@ function Renderer(el, rx, ry) {
         }
         ctx.stroke();
 
+        // Draw HUDs
+      
+        // Copy to frontbuffer
         const tmp = ctx.getImageData(0, 0, rx, ry);
         
         front.clearRect(0, 0, el.width, el.height);
@@ -105,6 +108,11 @@ function Renderer(el, rx, ry) {
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(backbuffer, 0, 0);
+
+        front.fillStyle = "lightgreen";
+        front.font = '12px x04b03';
+        front.fillText('04b03', 10, 10);
+
     }
 }
 
