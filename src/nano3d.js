@@ -64,15 +64,17 @@ function Wireframe(vertices, lines) {
     this.lines = lines;
 }
 
-function project(v, idx, screen, rx, ry) {
+function project(v, idx, screen, cx, cy) {
     const s = 96;
     const i = idx * 3;
-    screen[0] = rx / 2 + v[i+0] * s / v[i+2];
-    screen[1] = 2*ry/3 + v[i+1] * s / v[i+2];
+    screen[0] = cx + v[i+0] * s / v[i+2];
+    screen[1] = cy + v[i+1] * s / v[i+2];
 }
 
-function Renderer(el) {
+function Renderer(el, cx, cy) {
     var ctx = el.getContext('2d');
+    cx = cx || el.width / 2;
+    cy = cy || el.height / 2;
 
     this.render = function(wireframe, camera) {
         var vertices = mul(camera.matrix(), wireframe.vertices);
@@ -84,13 +86,13 @@ function Renderer(el) {
         ctx.beginPath();
         var screen = [null, null];
         for (var i = 0; i < wireframe.lines.length; i++) {
-            project(vertices, wireframe.lines[i][0], screen, el.width, el.height);
+            project(vertices, wireframe.lines[i][0], screen, cx, cy);
             ctx.moveTo(screen[0], screen[1]);
             for (var j = 1; j < wireframe.lines[i].length; j++) {
-                project(vertices, wireframe.lines[i][j], screen, el.width, el.height);
+                project(vertices, wireframe.lines[i][j], screen, cx, cy);
                 ctx.lineTo(screen[0], screen[1]);
                 
-                project(vertices, wireframe.lines[i][j], screen, el.width, el.height);
+                project(vertices, wireframe.lines[i][j], screen, cx, cy);
                 ctx.moveTo(screen[0], screen[1]);
             }
         }
