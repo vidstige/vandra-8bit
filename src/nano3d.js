@@ -84,11 +84,14 @@ function Renderer(el) {
         ctx.beginPath();
         var screen = [null, null];
         for (var i = 0; i < wireframe.lines.length; i++) {
-            project(vertices,wireframe.lines[i][0], screen, el.width, el.height);
+            project(vertices, wireframe.lines[i][0], screen, el.width, el.height);
             ctx.moveTo(screen[0], screen[1]);
             for (var j = 1; j < wireframe.lines[i].length; j++) {
                 project(vertices, wireframe.lines[i][j], screen, el.width, el.height);
                 ctx.lineTo(screen[0], screen[1]);
+                
+                project(vertices, wireframe.lines[i][j], screen, el.width, el.height);
+                ctx.moveTo(screen[0], screen[1]);
             }
         }
         ctx.stroke();
