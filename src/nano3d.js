@@ -71,28 +71,23 @@ function project(v, idx, screen, rx, ry) {
     screen[1] = 2*ry/3 + v[i+1] * s / v[i+2];
 }
 
-function Renderer(el, rx, ry) {
-    var front = el.getContext('2d');
-
-    var backbuffer = document.createElement('canvas');
-    backbuffer.setAttribute('width', rx);
-    backbuffer.setAttribute('height', ry);
-    var ctx = backbuffer.getContext('2d');
+function Renderer(el) {
+    var ctx = el.getContext('2d');
 
     this.render = function(wireframe, camera) {
         var vertices = mul(camera.matrix(), wireframe.vertices);
 
-        ctx.clearRect(0, 0, rx, ry);
+        ctx.clearRect(0, 0, el.width, el.height);
 
         ctx.strokeStyle = "lightgreen";
         ctx.lineWidth = 2;
         ctx.beginPath();
         var screen = [null, null];
         for (var i = 0; i < wireframe.lines.length; i++) {
-            project(vertices,wireframe.lines[i][0], screen, rx, ry);
+            project(vertices,wireframe.lines[i][0], screen, el.width, el.height);
             ctx.moveTo(screen[0], screen[1]);
             for (var j = 1; j < wireframe.lines[i].length; j++) {
-                project(vertices, wireframe.lines[i][j], screen, rx, ry);
+                project(vertices, wireframe.lines[i][j], screen, el.width, el.height);
                 ctx.lineTo(screen[0], screen[1]);
             }
         }
@@ -102,15 +97,6 @@ function Renderer(el, rx, ry) {
         ctx.fillStyle = "lightgreen";
         ctx.font = '8px x04b03';
         ctx.fillText('04b03', 1, 12);
-
-        // Copy to frontbuffer
-        const tmp = ctx.getImageData(0, 0, rx, ry);
-        
-        front.clearRect(0, 0, el.width, el.height);
-        const ratio = el.width/rx;
-        front.setTransform(ratio, 0, 0, ratio, 0, 0);
-        front.imageSmoothingEnabled = false;
-        front.drawImage(backbuffer, 0, 0);
     }
 }
 
