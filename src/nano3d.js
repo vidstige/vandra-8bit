@@ -65,7 +65,7 @@ function Wireframe(vertices, lines) {
 }
 
 function project(v, idx, screen, rx, ry) {
-    const s = 196;
+    const s = 96;
     const i = idx * 3;
     screen[0] = rx / 2 + v[i+0] * s / v[i+2];
     screen[1] = 2*ry/3 + v[i+1] * s / v[i+2];
@@ -99,20 +99,18 @@ function Renderer(el, rx, ry) {
         ctx.stroke();
 
         // Draw HUDs
-      
+        ctx.fillStyle = "lightgreen";
+        ctx.font = '8px x04b03';
+        ctx.fillText('04b03', 1, 12);
+
         // Copy to frontbuffer
         const tmp = ctx.getImageData(0, 0, rx, ry);
         
         front.clearRect(0, 0, el.width, el.height);
-        const ratio = 4; // el.width/rx;
+        const ratio = el.width/rx;
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(backbuffer, 0, 0);
-
-        front.fillStyle = "lightgreen";
-        front.font = '12px x04b03';
-        front.fillText('04b03', 10, 10);
-
     }
 }
 
