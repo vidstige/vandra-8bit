@@ -1,7 +1,7 @@
 # Vandra 8-bit
 Retro, Lo-Fi, 8-bit styled JS app displaying some text and 
 3d wireframe model.
-
+![screenshot](screenshots/1.gif)
 ## Getting started
 1. Just clone repository and 
 2. `npm start` (or `yarn`)
