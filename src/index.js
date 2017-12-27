@@ -5,6 +5,37 @@ const nano3d = require('./nano3d');
 const cube = require('./cube');
 const Pixels = require('./pixels');
 
+function Terminal(target, font, speed) {
+    var buffer = [];
+    speed = speed || 200;
+    this.line = 0;
+
+
+    this.print = function(text) {
+        buffer[this.line] = text;
+        this.line++;
+    };
+
+    this.update = function(timestamp) {
+        const ctx = target.getContext('2d');
+        ctx.fillStyle = "lightgreen";
+        ctx.font = font;
+        ctx.textBaseline = 'top';
+
+        const delay = 1000; // ms
+        var n = buffer.length * (timestamp - delay) / speed;
+        const cursor = '▍';
+        const end_delay = 15; // cycles
+        for (var i = 0; i < buffer.length; i++) {
+            var display = buffer[i].substring(0, n);
+            if (n <= buffer[i].length + end_delay && n > 0) display += cursor;
+            ctx.fillText(display, 0, i * 8);
+            n -= buffer[i].length;
+            n -= end_delay;
+        }
+    };
+}
+
 function spinWireframe(w) {
     var pixels = new Pixels(160, 100);
     const renderer =
@@ -13,19 +44,31 @@ function spinWireframe(w) {
     camera.at = [0, 0, 0];
     camera.up = [0, 1, 0];
 
+    const terminal = new Terminal(pixels.backbuffer, '8px x04b03');
+    terminal.print('-- vandra-97 --');
+    terminal.print('state: active');
+    terminal.print('version: c80b4b9');
+    terminal.print('');
+    terminal.print('batch: unknown');
+    terminal.print('residual: 1.3e-7');
+    terminal.print('telemetry: up');
+    terminal.print('transmitted: 13/127');
+    terminal.print('rig: stable');
+    terminal.print('');
+    terminal.print('manufacturer: volumental');
+    terminal.print('> | o');
+    console.log(terminal.line);
+
     var element = document.getElementById('canvas');
     function spin(timestamp) {
-        const t = timestamp / 2000.0;
+        const t = timestamp / 4000.0;
         const r = 150;
 
         camera.eye = [r*Math.sin(t), -80, r*Math.cos(t)];
         renderer.render(w, camera);
 
         // Draw HUDs
-        var ctx = pixels.backbuffer.getContext('2d');
-        ctx.fillStyle = "lightgreen";
-        ctx.font = '8px x04b03';
-        ctx.fillText('04b03', 1, 12);
+        terminal.update(timestamp);
         
         pixels.update(element);
         requestAnimationFrame(spin);
