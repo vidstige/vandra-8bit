@@ -7,7 +7,7 @@ const Pixels = require('./pixels');
 
 function Terminal(target, font, speed) {
     var buffer = [];
-    speed = speed || 200;
+    speed = speed || 50;
     this.line = 0;
 
 
@@ -22,16 +22,19 @@ function Terminal(target, font, speed) {
         ctx.font = font;
         ctx.textBaseline = 'top';
 
-        const delay = 1000; // ms
-        var n = buffer.length * (timestamp - delay) / speed;
+        var delay = 1000; // ms
+        var n = (timestamp - delay) / speed;
         const cursor = '▍';
         const end_delay = 15; // cycles
         for (var i = 0; i < buffer.length; i++) {
             var display = buffer[i].substring(0, n);
             if (n <= buffer[i].length + end_delay && n > 0) display += cursor;
-            ctx.fillText(display, 0, i * 8);
+            ctx.fillText(display, 4, 4 + i * 8);
             n -= buffer[i].length;
             n -= end_delay;
+        }
+        if (n >= 0) {
+            delay += timestamp;
         }
     };
 }
@@ -57,7 +60,6 @@ function spinWireframe(w) {
     terminal.print('');
     terminal.print('manufacturer: volumental');
     terminal.print('> | o');
-    console.log(terminal.line);
 
     var element = document.getElementById('canvas');
     function spin(timestamp) {
