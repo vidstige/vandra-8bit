@@ -20,6 +20,10 @@ module.exports = {
                 test: /\.html/, 
                 loader: 'file-loader?name=[name].[ext]', 
             },
+            {
+                test: /\.obj/, 
+                loader: 'file-loader?name=[name].[ext]', 
+            },
         ]
     },
     devServer: {

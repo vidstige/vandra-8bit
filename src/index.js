@@ -2,8 +2,10 @@ import { request } from "http";
 
 require("../style.css");
 const nano3d = require('./nano3d');
-const cube = require('./cube');
 const Pixels = require('./pixels');
+
+// TODO: Create obj loader
+require('../static/vandra.obj');
 
 function Terminal(target, font, speed) {
     var buffer = [];
