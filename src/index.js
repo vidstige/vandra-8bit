@@ -6,6 +6,7 @@ const Pixels = require('./pixels');
 
 // TODO: Create obj loader
 require('../static/vandra.obj');
+require('../static/favicon.png')
 
 function Terminal(target, font, speed) {
     var buffer = [];
