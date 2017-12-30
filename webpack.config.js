@@ -1,5 +1,8 @@
 module.exports = {
-    entry: "./src/index.js",
+    entry: [
+        "./src/index.js",
+        "./static/index.html",
+    ],
     output: {
         path: __dirname + "/build",
         publicPath: 'build/',
@@ -13,6 +16,10 @@ module.exports = {
                 loader: 'file-loader?name=fonts/[name].[ext]'
             },
             { test: /\.css$/, loader: "style-loader!css-loader" },
+            {
+                test: /\.html/, 
+                loader: 'file-loader?name=[name].[ext]', 
+            },
         ]
     },
     devServer: {
