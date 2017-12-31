@@ -14,13 +14,27 @@ function Pixels(rx, ry) {
         front.setTransform(ratio, 0, 0, ratio, 0, 0);
         front.imageSmoothingEnabled = false;
         front.drawImage(this.backbuffer, 0, 0);
+        // Reset transformation
+        front.setTransform(1, 0, 0, 1, 0, 0);
+
+
+        // Scan lines
+        const start = 
+        front.strokeStyle = "rgba(255, 255, 255, 0.08)";
+        front.lineWidth = 4;
+        front.beginPath();
+        for (var y = 0; y < el.height; y += 8) {
+            front.moveTo(0, y);
+            front.lineTo(el.width, y);
+        }
+        front.stroke();
 
         // vignette
-        const gx = rx / 2;
-        const gy = ry / 2;
-        var vignette = front.createRadialGradient(gx, gy, 0, gx, gy, 200);
+        const gx = el.width / 2;
+        const gy = el.height / 2;
+        var vignette = front.createRadialGradient(gx, gy, 0, gx, gy, el.height*1.4);
         vignette.addColorStop(0, "transparent");
-        vignette.addColorStop(1, "rgba(0,0,0, 10)");
+        vignette.addColorStop(1, "black");
         front.fillStyle = vignette;
         front.fillRect(0, 0, el.width, el.height);
     };
