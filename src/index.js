@@ -45,7 +45,7 @@ function Terminal(target, font, speed) {
     };
 }
 
-function spinWireframe(w) {
+function main(w) {
     var pixels = new Pixels(160, 100);
     const renderer =
         new nano3d.Renderer(pixels.backbuffer, 120, 40);
@@ -68,7 +68,7 @@ function spinWireframe(w) {
     terminal.print('> | o');
 
     var element = document.getElementById('canvas');
-    function spin(timestamp) {
+    function draw(timestamp) {
         const t = timestamp / 4000.0;
         const r = 150;
 
@@ -83,18 +83,18 @@ function spinWireframe(w) {
 
         // Filters
         vignette(element);
-        scanlines(element);
+        scanlines(element, 0.05, 4, Math.sin(timestamp / 1000) * 8);
 
-        requestAnimationFrame(spin);
+        requestAnimationFrame(draw);
     }
-    requestAnimationFrame(spin)
+    requestAnimationFrame(draw)
 }
 
 function onload() {
 
     fetch('vandra.obj').then(function (r) {
         return r.text()
-    }).then(nano3d.load.obj).then(spinWireframe).catch(console.error);
+    }).then(nano3d.load.obj).then(main).catch(console.error);
 
     //spinWireframe(cube);
 }

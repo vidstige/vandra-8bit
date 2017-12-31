@@ -1,11 +1,11 @@
-function scanlines(el) {
+function scanlines(el, alpha, size, start) {
     var ctx = el.getContext('2d');
 
     // Scan lines
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
-    ctx.lineWidth = 4;
+    ctx.strokeStyle = "rgba(128, 128, 128, " + alpha + ")";
+    ctx.lineWidth = size;
     ctx.beginPath();
-    for (var y = 0; y < el.height; y += 8) {
+    for (var y = start % (size*2); y < el.height; y += size*2) {
         ctx.moveTo(0, y);
         ctx.lineTo(el.width, y);
     }
