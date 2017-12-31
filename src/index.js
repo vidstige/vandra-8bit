@@ -68,7 +68,11 @@ function main(w) {
     terminal.print('> | o');
 
     var element = document.getElementById('canvas');
+    var first = null;
     function draw(timestamp) {
+        first = first || timestamp;
+        timestamp -= first;
+
         const t = timestamp / 4000.0;
         const r = 150;
 
