@@ -58,11 +58,11 @@ function main(w) {
     terminal.print('state: active');
     terminal.print('version: c80b4b9');
     terminal.print('');
-    terminal.print('batch: unknown');
-    terminal.print('residual: 1.3e-7');
-    terminal.print('telemetry: up');
-    terminal.print('transmitted: 13/127');
     terminal.print('rig: stable');
+    terminal.print('residual: 1.3e-7');
+    terminal.print('transmitted: 17/17');
+    terminal.print('telemetry: up');
+    terminal.print('batch: unknown');
     terminal.print('');
     terminal.print('manufacturer: volumental');
     terminal.print('> | o');
