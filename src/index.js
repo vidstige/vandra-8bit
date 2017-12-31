@@ -4,6 +4,9 @@ require("../style.css");
 const nano3d = require('./nano3d');
 const Pixels = require('./pixels');
 
+const scanlines = require('./filters/scanlines');
+const vignette = require('./filters/vignette');
+
 // TODO: Create obj loader
 require('../static/vandra.obj');
 require('../static/favicon.png')
@@ -74,8 +77,14 @@ function spinWireframe(w) {
 
         // Draw HUDs
         terminal.update(timestamp);
-        
+
+        // Copy backbuffer
         pixels.update(element);
+
+        // Filters
+        vignette(element);
+        scanlines(element);
+
         requestAnimationFrame(spin);
     }
     requestAnimationFrame(spin)
