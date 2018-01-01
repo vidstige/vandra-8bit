@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
     "build": "NODE_ENV=production webpack",
+    "deploy": "now --public vandra-8bit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Samuel Carlsson",
